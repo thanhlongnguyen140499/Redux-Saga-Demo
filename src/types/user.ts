@@ -1,4 +1,5 @@
 export type USER_TYPE = {
+  id: string;
   name: string;
   age: number;
   school?: string;

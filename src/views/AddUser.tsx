@@ -1,5 +1,5 @@
 import {View, Alert, Button, TextInput, StyleSheet} from 'react-native';
-import React, {FC, useCallback, useState} from 'react';
+import React, {FC, memo, useCallback, useState} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from './HomeView';
@@ -11,12 +11,14 @@ interface AddUserProps {
 const AddUser: FC<AddUserProps> = ({navigation}) => {
   const [userName, setUserName] = useState<string>('');
   const [userAge, setUserAge] = useState<number>(0);
+  const [userSchool, setUserSchool] = useState<string>('');
 
   const addUser = useCallback(async () => {
     try {
       const res = await firestore().collection('Users').add({
         name: userName,
         age: userAge,
+        school: userSchool,
       });
 
       console.log('res: ', res.id);
@@ -25,7 +27,7 @@ const AddUser: FC<AddUserProps> = ({navigation}) => {
       console.error('Error adding user: ', error);
       Alert.alert('Error', 'Failed to add user.');
     }
-  }, [navigation, userName, userAge]);
+  }, [navigation, userName, userAge, userSchool]);
 
   return (
     <View style={styles.container}>
@@ -42,12 +44,18 @@ const AddUser: FC<AddUserProps> = ({navigation}) => {
         keyboardType="numeric"
         placeholder="Age"
       />
+      <TextInput
+        style={styles.textInput}
+        value={userSchool}
+        onChangeText={setUserSchool}
+        placeholder="School"
+      />
       <Button title="Add User" onPress={addUser} />
     </View>
   );
 };
 
-export default AddUser;
+export default memo(AddUser);
 
 const styles = StyleSheet.create({
   container: {

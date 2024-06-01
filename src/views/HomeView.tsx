@@ -60,6 +60,7 @@ const HomeView: FC<HomeViewProps> = ({navigation}) => {
         const users = documentSnapshot.docs;
         users.forEach(user => {
           const newUser: USER_TYPE = user.data() as USER_TYPE;
+          newUser.id = user.id;
           usersTemp.push(newUser);
           setUserList([...usersTemp]);
         });
@@ -74,6 +75,7 @@ const HomeView: FC<HomeViewProps> = ({navigation}) => {
     let usersTemp: USER_TYPE[] = [];
     users.forEach(user => {
       const newUser: USER_TYPE = user.data() as USER_TYPE;
+      newUser.id = user.id;
       usersTemp.push(newUser);
       setUserList([...usersTemp]);
     });

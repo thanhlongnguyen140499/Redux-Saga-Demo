@@ -19,6 +19,9 @@ const config = {
       '@': path.resolve(__dirname, 'src'),
     },
   },
+  transformer: {
+    babelTransformerPath: require.resolve('react-native-svg-transformer'),
+  },
 };
 
 module.exports = mergeConfig(defaultConfig, config);
